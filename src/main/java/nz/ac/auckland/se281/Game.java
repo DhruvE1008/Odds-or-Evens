@@ -12,7 +12,6 @@ public class Game {
   }
 
   public void play() {
-    System.out.println("test");
     MessageCli.START_ROUND.printMessage(String.valueOf(RoundNumber));
     RoundNumber++;
   }
