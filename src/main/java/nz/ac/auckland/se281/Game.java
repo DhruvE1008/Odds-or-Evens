@@ -30,6 +30,7 @@ public class Game {
     // prints what number it is
     MessageCli.START_ROUND.printMessage(String.valueOf(roundNumber));
     roundNumber++;
+    // loops until the user inputs the correct information
     while (validInputFound == false) {
       // asks user for its input
       System.out.println(MessageCli.ASK_INPUT);
