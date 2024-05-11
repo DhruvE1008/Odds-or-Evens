@@ -9,11 +9,19 @@ public class TopStrategy implements Strategy {
    * @return an integer between 0 and 5 that the AI generated
    */
   @Override
-  public int getFingerAmount(boolean moreOddThanEven) {
+  public int getFingerAmount(boolean moreOddThanEven, boolean isODD) {
     if (moreOddThanEven) {
-      return Utils.getRandomOddNumber();
+      if (isODD) {
+        return Utils.getRandomOddNumber();
+      } else {
+        return Utils.getRandomEvenNumber();
+      }
     } else {
-      return Utils.getRandomEvenNumber();
+      if (isODD) {
+        return Utils.getRandomEvenNumber();
+      } else {
+        return Utils.getRandomOddNumber();
+      }
     }
   }
 }

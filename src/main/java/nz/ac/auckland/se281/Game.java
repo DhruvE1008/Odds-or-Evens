@@ -89,9 +89,17 @@ public class Game {
           botFingers = botLevel.getFingers(bot);
         } else {
           if (oddNum > evenNum) {
-            bot = new Bot(new TopStrategy(), true);
+            if (choice == Choice.ODD) {
+              bot = new Bot(new TopStrategy(), true, true);
+            } else {
+              bot = new Bot(new TopStrategy(), true, false);
+            }
           } else {
-            bot = new Bot(new TopStrategy(), false);
+            if (choice == Choice.ODD) {
+              bot = new Bot(new TopStrategy(), false, true);
+            } else {
+              bot = new Bot(new TopStrategy(), false, false);
+            }
           }
           botFingers = botLevel.getFingers(bot);
         }

@@ -7,7 +7,7 @@ public class RandomStrategy implements Strategy {
    * @return an integer between 0 and 5 inclusive
    */
   @Override
-  public int getFingerAmount(boolean moreOddThanEven) {
+  public int getFingerAmount(boolean moreOddThanEven, boolean isODD) {
     return Utils.getRandomNumberRange(0, 5);
   }
 }
