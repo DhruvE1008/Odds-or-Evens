@@ -7,6 +7,7 @@ import nz.ac.auckland.se281.Main.Difficulty;
 public class Game {
   private int roundNumber = 1;
   private String name;
+  private Difficulty botDifficulty;
 
   /**
    * Creates a new game of odd or even and takes in the starting values.
@@ -17,6 +18,7 @@ public class Game {
    */
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     name = options[0];
+    botDifficulty = difficulty;
     MessageCli.WELCOME_PLAYER.printMessage(name);
   }
 
@@ -36,7 +38,7 @@ public class Game {
       // asks user for its input
       System.out.println(MessageCli.ASK_INPUT);
       input = Utils.scanner.nextLine();
-      try {
+      if (Utils.isInteger(input)) {
         int fingers = Integer.parseInt(input);
         // checks if the number of fingers is valid
         if (fingers < 0 || fingers > 5) {
@@ -45,9 +47,26 @@ public class Game {
           MessageCli.PRINT_INFO_HAND.printMessage(name, input);
           validInputFound = true;
         }
-      } catch (Exception e) {
-        System.out.println("Incorrect Input.");
+      } else {
+        System.out.println("Invalid input!");
       }
+    }
+    BotDifficulty botLevel;
+    switch (botDifficulty) {
+      case EASY:
+        botLevel = DifficultyFactory.createDifficulty("EASY");
+        Bot bot = new Bot(new RandomStrategy());
+        bot.play();
+        break;
+      case MEDIUM:
+        botLevel = DifficultyFactory.createDifficulty("MEDIUM");
+        break;
+      case HARD:
+        botLevel = DifficultyFactory.createDifficulty("HARD");
+        break;
+      default:
+        MessageCli.INVALID_DIFFICULTY.printMessage();
+        break; 
     }
   }
 
