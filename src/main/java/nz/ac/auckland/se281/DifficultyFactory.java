@@ -2,7 +2,7 @@ package nz.ac.auckland.se281;
 
 public class DifficultyFactory {
   /**
-   * takes in the difficulty as input and then creates an instance of the difficulty
+   * takes in the difficulty as input and then creates an instance of the difficulty.
    *
    * @param type difficulty of the game in type string
    * @return a new instance of a difficulty

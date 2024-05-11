@@ -1,5 +1,6 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
 import nz.ac.auckland.se281.Main.Choice;
 import nz.ac.auckland.se281.Main.Difficulty;
 
@@ -11,6 +12,7 @@ public class Game {
   private Choice choice;
   private int humanScore;
   private int botScore;
+  private ArrayList<Integer> userInput = new ArrayList<>();
 
   /**
    * Creates a new game of odd or even and takes in the starting values.
@@ -37,6 +39,11 @@ public class Game {
     String input;
     int botFingers = -1;
     int humanFingers = -1;
+    BotDifficulty botLevel;
+    String sum;
+    Bot bot;
+    int evenNum = 0;
+    int oddNum = 0;
     // prints what number it is
     MessageCli.START_ROUND.printMessage(String.valueOf(roundNumber));
     roundNumber++;
@@ -54,21 +61,40 @@ public class Game {
         } else {
           MessageCli.PRINT_INFO_HAND.printMessage(name, input);
           validInputFound = true;
+          userInput.add(humanFingers);
         }
       } else {
         MessageCli.INVALID_INPUT.printMessage();
       }
     }
-    BotDifficulty botLevel;
+    // counts the number of even numbers and number of odd numbers that the user has input
+    for (int i = 0; i < userInput.size() - 1; i++) {
+      if (Utils.isEven(userInput.get(i))) {
+        evenNum++;
+      } else {
+        oddNum++;
+      }
+    }
     // plays the move based on what difficulty the bot is
     switch (botDifficulty) {
       case EASY:
         botLevel = DifficultyFactory.createDifficulty("EASY");
-        Bot bot = new Bot(new RandomStrategy());
-        botFingers = bot.play();
+        bot = new Bot(new RandomStrategy());
+        botFingers = botLevel.getFingers(bot);
         break;
       case MEDIUM:
         botLevel = DifficultyFactory.createDifficulty("MEDIUM");
+        if (roundNumber < 4) {
+          bot = new Bot(new RandomStrategy());
+          botFingers = botLevel.getFingers(bot);
+        } else {
+          if (oddNum > evenNum) {
+            bot = new Bot(new TopStrategy(), true);
+          } else {
+            bot = new Bot(new TopStrategy(), false);
+          }
+          botFingers = botLevel.getFingers(bot);
+        }
         break;
       case HARD:
         botLevel = DifficultyFactory.createDifficulty("HARD");
@@ -77,17 +103,21 @@ public class Game {
         MessageCli.INVALID_DIFFICULTY.printMessage();
         break;
     }
-    if (Utils.isEven(humanFingers+botFingers)) {
+    sum = String.valueOf(humanFingers + botFingers);
+    // checks if the sum is even or odd
+    if (Utils.isEven(humanFingers + botFingers)) {
+      // if the choice was even and the sum is even the user wins otherwise the bot wins
       if (choice == Choice.EVEN) {
-        MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(humanFingers+botFingers), "EVEN", name);
+        MessageCli.PRINT_OUTCOME_ROUND.printMessage(sum, "EVEN", name);
       } else {
-        MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(humanFingers+botFingers), "EVEN", "HAL-9000");
+        MessageCli.PRINT_OUTCOME_ROUND.printMessage(sum, "EVEN", "HAL-9000");
       }
     } else {
+      // if the choice was odd and the sum is odd the user wins otherwise the bot wins
       if (choice == Choice.ODD) {
-        MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(humanFingers+botFingers), "ODD", name);
+        MessageCli.PRINT_OUTCOME_ROUND.printMessage(sum, "ODD", name);
       } else {
-        MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(humanFingers+botFingers), "ODD", "HAL-9000");
+        MessageCli.PRINT_OUTCOME_ROUND.printMessage(sum, "ODD", "HAL-9000");
       }
     }
   }
