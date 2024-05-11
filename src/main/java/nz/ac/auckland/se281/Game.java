@@ -9,7 +9,7 @@ public class Game {
   private String name;
 
   /**
-   * Creates a new game of odd or even and takes in the starting values
+   * Creates a new game of odd or even and takes in the starting values.
    *
    * @param difficulty stores the value of the difficulty of the AI
    * @param choice stores whether the user chose odd or even
@@ -22,7 +22,7 @@ public class Game {
 
   /**
    * Method that lets the user play by taking in the input that the user wants to do for the current
-   * round
+   * round.
    */
   public void play() {
     boolean validInputFound = false;
@@ -32,6 +32,7 @@ public class Game {
     roundNumber++;
     // loops until the user inputs the correct information
     while (validInputFound == false) {
+      validInputFound = false;
       // asks user for its input
       System.out.println(MessageCli.ASK_INPUT);
       input = Utils.scanner.nextLine();
@@ -45,7 +46,7 @@ public class Game {
           validInputFound = true;
         }
       } catch (Exception e) {
-
+        System.out.println("Incorrect Input.");
       }
     }
   }
