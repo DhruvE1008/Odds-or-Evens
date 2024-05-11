@@ -2,6 +2,7 @@ package nz.ac.auckland.se281;
 
 public class Bot {
   private Strategy strategy;
+
   public Bot(Strategy strategy) {
     this.strategy = strategy;
   }
@@ -10,8 +11,9 @@ public class Bot {
     this.strategy = strategy;
   }
 
-  public void play() {
+  public int play() {
     int fingers = strategy.getFingerAmount();
     MessageCli.PRINT_INFO_HAND.printMessage("HAL-9000", String.valueOf(fingers));
+    return fingers;
   }
 }

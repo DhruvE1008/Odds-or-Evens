@@ -8,6 +8,9 @@ public class Game {
   private int roundNumber = 1;
   private String name;
   private Difficulty botDifficulty;
+  private Choice choice;
+  private int humanScore;
+  private int botScore;
 
   /**
    * Creates a new game of odd or even and takes in the starting values.
@@ -17,8 +20,11 @@ public class Game {
    * @param options stores the name
    */
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
-    name = options[0];
-    botDifficulty = difficulty;
+    this.name = options[0];
+    this.botDifficulty = difficulty;
+    this.choice = choice;
+    this.botScore = 0;
+    this.humanScore = 0;
     MessageCli.WELCOME_PLAYER.printMessage(name);
   }
 
@@ -29,6 +35,8 @@ public class Game {
   public void play() {
     boolean validInputFound = false;
     String input;
+    int botFingers = -1;
+    int humanFingers = -1;
     // prints what number it is
     MessageCli.START_ROUND.printMessage(String.valueOf(roundNumber));
     roundNumber++;
@@ -39,24 +47,25 @@ public class Game {
       System.out.println(MessageCli.ASK_INPUT);
       input = Utils.scanner.nextLine();
       if (Utils.isInteger(input)) {
-        int fingers = Integer.parseInt(input);
+        humanFingers = Integer.parseInt(input);
         // checks if the number of fingers is valid
-        if (fingers < 0 || fingers > 5) {
-          System.out.println(MessageCli.INVALID_INPUT);
+        if (humanFingers < 0 || humanFingers > 5) {
+          MessageCli.INVALID_INPUT.printMessage();
         } else {
           MessageCli.PRINT_INFO_HAND.printMessage(name, input);
           validInputFound = true;
         }
       } else {
-        System.out.println("Invalid input!");
+        MessageCli.INVALID_INPUT.printMessage();
       }
     }
     BotDifficulty botLevel;
+    // plays the move based on what difficulty the bot is
     switch (botDifficulty) {
       case EASY:
         botLevel = DifficultyFactory.createDifficulty("EASY");
         Bot bot = new Bot(new RandomStrategy());
-        bot.play();
+        botFingers = bot.play();
         break;
       case MEDIUM:
         botLevel = DifficultyFactory.createDifficulty("MEDIUM");
@@ -66,7 +75,20 @@ public class Game {
         break;
       default:
         MessageCli.INVALID_DIFFICULTY.printMessage();
-        break; 
+        break;
+    }
+    if (Utils.isEven(humanFingers+botFingers)) {
+      if (choice == Choice.EVEN) {
+        MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(humanFingers+botFingers), "EVEN", name);
+      } else {
+        MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(humanFingers+botFingers), "EVEN", "HAL-9000");
+      }
+    } else {
+      if (choice == Choice.ODD) {
+        MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(humanFingers+botFingers), "ODD", name);
+      } else {
+        MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(humanFingers+botFingers), "ODD", "HAL-9000");
+      }
     }
   }
 
