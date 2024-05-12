@@ -63,7 +63,6 @@ public class Game {
     int botFingers = -1;
     int humanFingers = -1;
     String sum;
-    Bot bot;
     int evenNum = 0;
     int oddNum = 0;
     // prints what number it is
@@ -131,6 +130,13 @@ public class Game {
       return;
     } 
     showStats();
+    if (humanScore>botScore) {
+      MessageCli.PRINT_END_GAME.printMessage(name);
+    } else if (botScore>humanScore) {
+      MessageCli.PRINT_END_GAME.printMessage("HAL-9000");
+    } else {
+      MessageCli.PRINT_END_GAME_TIE.printMessage();
+    }
   }
 
   public void showStats() {
