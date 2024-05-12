@@ -53,8 +53,19 @@ public class HardDifficulty implements BotDifficulty {
     return bot.play();
   }
 
+  /**
+   * sets up the TopStrategy class by sending through the parameters based on what the user has
+   * input before and whether it chose Odd or Even.
+   *
+   * @param oddNum
+   * @param evenNum
+   * @param currentStrat
+   */
   public void topStrategySetup(int oddNum, int evenNum, String currentStrat) {
+    // checks the amount of odd numbers and even numbers and see which one is
+    // more frequent.
     if (oddNum > evenNum) {
+      // checks whether the choice was odd or even
       if (choice == Choice.ODD) {
         bot = new Bot(new TopStrategy(), true, true);
       } else {
@@ -67,6 +78,7 @@ public class HardDifficulty implements BotDifficulty {
         bot = new Bot(new TopStrategy(), false, false);
       }
     } else {
+      // random strategy is used if the amount of odd and even numbers is the same
       bot = new Bot(new RandomStrategy());
     }
   }

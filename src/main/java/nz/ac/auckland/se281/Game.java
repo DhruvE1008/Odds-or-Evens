@@ -42,10 +42,12 @@ public class Game {
         botLevel = DifficultyFactory.createDifficulty("HARD", choice);
         break;
       default:
+        // if the difficulty is invalid an appropriate message is printed.
         MessageCli.INVALID_DIFFICULTY.printMessage();
         break;
     }
     gameStarted = true;
+    // welcomes the player
     MessageCli.WELCOME_PLAYER.printMessage(name);
   }
 
@@ -126,11 +128,14 @@ public class Game {
 
   /** method that ends the game by stating who the winner is. */
   public void endGame() {
+    // if the game hasn't started and the user wants to end the game
+    // we output an error message.
     if (!gameStarted) {
       MessageCli.GAME_NOT_STARTED.printMessage();
       return;
     }
     showStats();
+    // outputs the winner or Tie! if the scores are tied.
     if (humanScore > botScore) {
       MessageCli.PRINT_END_GAME.printMessage(name);
     } else if (botScore > humanScore) {
@@ -146,10 +151,13 @@ public class Game {
    * and lost.
    */
   public void showStats() {
+    //  prints an error if the user decides to end the game even though
+    // a game hasn't been started
     if (!gameStarted) {
       MessageCli.GAME_NOT_STARTED.printMessage();
       return;
     }
+    // outputs the scores of the player and the AI.
     MessageCli.PRINT_PLAYER_WINS.printMessage(
         name, String.valueOf(humanScore), String.valueOf(botScore));
     MessageCli.PRINT_PLAYER_WINS.printMessage(

@@ -30,12 +30,15 @@ public class MediumDifficulty implements BotDifficulty {
       int roundNumber, int oddNum, int evenNum, boolean botWin, String currentStrat) {
     Bot bot;
     if (roundNumber < 4) {
+      // if the round number is less than 4 then random strategy is used.
       bot = new Bot(new RandomStrategy());
       newStrat = "Random";
     } else {
       newStrat = "Top";
+      // checks if the user inputs more odd numbers than even numbers
       if (oddNum > evenNum) {
         if (choice == Choice.ODD) {
+          // checks if the user chose odd or even
           bot = new Bot(new TopStrategy(), true, true);
         } else {
           bot = new Bot(new TopStrategy(), true, false);
@@ -47,6 +50,8 @@ public class MediumDifficulty implements BotDifficulty {
           bot = new Bot(new TopStrategy(), false, false);
         }
       } else {
+        // if the user has input odd and even numbers the same amount of times
+        // the random strategy will be used.
         newStrat = "Random";
         bot = new Bot(new RandomStrategy());
       }
