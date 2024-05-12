@@ -14,6 +14,7 @@ public class Game {
   private boolean botWin;
   private String currentStrat;
   private BotDifficulty botLevel;
+  private boolean gameStarted = false;
   private ArrayList<Integer> userInput = new ArrayList<>();
 
   /**
@@ -43,6 +44,7 @@ public class Game {
         MessageCli.INVALID_DIFFICULTY.printMessage();
         break;
     }
+    gameStarted = true;
     MessageCli.WELCOME_PLAYER.printMessage(name);
   }
 
@@ -51,6 +53,10 @@ public class Game {
    * round.
    */
   public void play() {
+    if (gameStarted == false) {
+      MessageCli.GAME_NOT_STARTED.printMessage();
+      return;
+    }
     boolean validInputFound = false;
     String input;
     int botFingers = -1;
