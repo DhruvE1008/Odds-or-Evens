@@ -10,6 +10,9 @@ public class TopStrategy implements Strategy {
    */
   @Override
   public int getFingerAmount(boolean moreOddThanEven, boolean isODD) {
+    // if the user has input more odd than even numbers the AI will consider what the choice that
+    // the user choose and select a random odd or even number based on what they think the user will
+    // select
     if (moreOddThanEven) {
       if (isODD) {
         return Utils.getRandomOddNumber();

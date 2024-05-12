@@ -12,6 +12,8 @@ public class Game {
   private Choice choice;
   private int humanScore;
   private int botScore;
+  private boolean botWin;
+  private String currentStrat;
   private ArrayList<Integer> userInput = new ArrayList<>();
 
   /**
@@ -86,7 +88,6 @@ public class Game {
         botLevel = DifficultyFactory.createDifficulty("MEDIUM");
         if (roundNumber < 4) {
           bot = new Bot(new RandomStrategy());
-          botFingers = botLevel.getFingers(bot);
         } else {
           if (oddNum > evenNum) {
             if (choice == Choice.ODD) {
@@ -94,18 +95,72 @@ public class Game {
             } else {
               bot = new Bot(new TopStrategy(), true, false);
             }
-          } else {
+          } else if (evenNum > oddNum) {
             if (choice == Choice.ODD) {
               bot = new Bot(new TopStrategy(), false, true);
             } else {
               bot = new Bot(new TopStrategy(), false, false);
             }
+          } else {
+            bot = new Bot(new RandomStrategy());
           }
-          botFingers = botLevel.getFingers(bot);
         }
+        botFingers = botLevel.getFingers(bot);
         break;
       case HARD:
         botLevel = DifficultyFactory.createDifficulty("HARD");
+        if (roundNumber < 4) {
+          System.out.println("test");
+          bot = new Bot(new RandomStrategy());
+          currentStrat = "random";
+        } else {
+          if (botWin) {
+            if (currentStrat == "random") {
+              bot = new Bot(new RandomStrategy());
+              currentStrat = "random";
+            } else {
+              if (oddNum > evenNum) {
+                if (choice == Choice.ODD) {
+                  bot = new Bot(new TopStrategy(), true, true);
+                } else {
+                  bot = new Bot(new TopStrategy(), true, false);
+                }
+              } else if (evenNum > oddNum) {
+                if (choice == Choice.ODD) {
+                  bot = new Bot(new TopStrategy(), false, true);
+                } else {
+                  bot = new Bot(new TopStrategy(), false, false);
+                }
+              } else {
+                bot = new Bot(new RandomStrategy());
+              }
+              currentStrat = "top";
+            }
+          } else {
+            if (currentStrat == "random") {
+              if (oddNum > evenNum) {
+                if (choice == Choice.ODD) {
+                  bot = new Bot(new TopStrategy(), true, true);
+                } else {
+                  bot = new Bot(new TopStrategy(), true, false);
+                }
+              } else if (evenNum > oddNum) {
+                if (choice == Choice.ODD) {
+                  bot = new Bot(new TopStrategy(), false, true);
+                } else {
+                  bot = new Bot(new TopStrategy(), false, false);
+                }
+              } else {
+                bot = new Bot(new RandomStrategy());
+              }
+              currentStrat = "top";
+            } else {
+              bot = new Bot(new RandomStrategy());
+              currentStrat = "random";
+            }
+          }
+        }
+        botFingers = botLevel.getFingers(bot);
         break;
       default:
         MessageCli.INVALID_DIFFICULTY.printMessage();
@@ -117,15 +172,19 @@ public class Game {
       // if the choice was even and the sum is even the user wins otherwise the bot wins
       if (choice == Choice.EVEN) {
         MessageCli.PRINT_OUTCOME_ROUND.printMessage(sum, "EVEN", name);
+        botWin = false;
       } else {
         MessageCli.PRINT_OUTCOME_ROUND.printMessage(sum, "EVEN", "HAL-9000");
+        botWin = true;
       }
     } else {
       // if the choice was odd and the sum is odd the user wins otherwise the bot wins
       if (choice == Choice.ODD) {
         MessageCli.PRINT_OUTCOME_ROUND.printMessage(sum, "ODD", name);
+        botWin = false;
       } else {
         MessageCli.PRINT_OUTCOME_ROUND.printMessage(sum, "ODD", "HAL-9000");
+        botWin = true;
       }
     }
   }
