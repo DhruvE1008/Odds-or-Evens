@@ -3,7 +3,7 @@ package nz.ac.auckland.se281;
 public class Bot {
   private Strategy strategy;
   private boolean moreOddThanEven;
-  private boolean isODD;
+  private boolean isOdd;
 
   /**
    * Constructor for class Bot which takes in a strategy as its input.
@@ -21,10 +21,10 @@ public class Bot {
    * @param strategy the strategy that the AI will be using
    * @param moreOddThanEven states whether the user has more odd numbers than even numbers.
    */
-  public Bot(Strategy strategy, Boolean moreOddThanEven, Boolean isODD) {
+  public Bot(Strategy strategy, Boolean moreOddThanEven, Boolean isOdd) {
     this.strategy = strategy;
     this.moreOddThanEven = moreOddThanEven;
-    this.isODD = isODD;
+    this.isOdd = isOdd;
   }
 
   /**
@@ -42,7 +42,7 @@ public class Bot {
    * @return the number of fingers the AI chose
    */
   public int play() {
-    int fingers = strategy.getFingerAmount(moreOddThanEven, isODD);
+    int fingers = strategy.getFingerAmount(moreOddThanEven, isOdd);
     MessageCli.PRINT_INFO_HAND.printMessage("HAL-9000", String.valueOf(fingers));
     return fingers;
   }

@@ -8,12 +8,12 @@ import nz.ac.auckland.se281.Main.Difficulty;
 public class Game {
   private int roundNumber = 1;
   private String name;
-  private Difficulty botDifficulty;
   private Choice choice;
   private int humanScore;
   private int botScore;
   private boolean botWin;
   private String currentStrat;
+  private BotDifficulty botLevel;
   private ArrayList<Integer> userInput = new ArrayList<>();
 
   /**
@@ -25,10 +25,23 @@ public class Game {
    */
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     this.name = options[0];
-    this.botDifficulty = difficulty;
-    this.choice = choice;
     this.botScore = 0;
     this.humanScore = 0;
+    // plays the move based on what difficulty the bot is
+    switch (difficulty) {
+      case EASY:
+        botLevel = DifficultyFactory.createDifficulty("EASY", choice);
+        break;
+      case MEDIUM:
+        botLevel = DifficultyFactory.createDifficulty("MEDIUM", choice);
+        break;
+      case HARD:
+        botLevel = DifficultyFactory.createDifficulty("HARD", choice);
+        break;
+      default:
+        MessageCli.INVALID_DIFFICULTY.printMessage();
+        break;
+    }
     MessageCli.WELCOME_PLAYER.printMessage(name);
   }
 
@@ -41,7 +54,6 @@ public class Game {
     String input;
     int botFingers = -1;
     int humanFingers = -1;
-    BotDifficulty botLevel;
     String sum;
     Bot bot;
     int evenNum = 0;
@@ -77,95 +89,7 @@ public class Game {
         oddNum++;
       }
     }
-    // plays the move based on what difficulty the bot is
-    switch (botDifficulty) {
-      case EASY:
-        botLevel = DifficultyFactory.createDifficulty("EASY");
-        bot = new Bot(new RandomStrategy());
-        botFingers = botLevel.getFingers(bot);
-        break;
-      case MEDIUM:
-        botLevel = DifficultyFactory.createDifficulty("MEDIUM");
-        if (roundNumber < 4) {
-          bot = new Bot(new RandomStrategy());
-        } else {
-          if (oddNum > evenNum) {
-            if (choice == Choice.ODD) {
-              bot = new Bot(new TopStrategy(), true, true);
-            } else {
-              bot = new Bot(new TopStrategy(), true, false);
-            }
-          } else if (evenNum > oddNum) {
-            if (choice == Choice.ODD) {
-              bot = new Bot(new TopStrategy(), false, true);
-            } else {
-              bot = new Bot(new TopStrategy(), false, false);
-            }
-          } else {
-            bot = new Bot(new RandomStrategy());
-          }
-        }
-        botFingers = botLevel.getFingers(bot);
-        break;
-      case HARD:
-        botLevel = DifficultyFactory.createDifficulty("HARD");
-        if (roundNumber < 4) {
-          System.out.println("test");
-          bot = new Bot(new RandomStrategy());
-          currentStrat = "random";
-        } else {
-          if (botWin) {
-            if (currentStrat == "random") {
-              bot = new Bot(new RandomStrategy());
-              currentStrat = "random";
-            } else {
-              if (oddNum > evenNum) {
-                if (choice == Choice.ODD) {
-                  bot = new Bot(new TopStrategy(), true, true);
-                } else {
-                  bot = new Bot(new TopStrategy(), true, false);
-                }
-              } else if (evenNum > oddNum) {
-                if (choice == Choice.ODD) {
-                  bot = new Bot(new TopStrategy(), false, true);
-                } else {
-                  bot = new Bot(new TopStrategy(), false, false);
-                }
-              } else {
-                bot = new Bot(new RandomStrategy());
-              }
-              currentStrat = "top";
-            }
-          } else {
-            if (currentStrat == "random") {
-              if (oddNum > evenNum) {
-                if (choice == Choice.ODD) {
-                  bot = new Bot(new TopStrategy(), true, true);
-                } else {
-                  bot = new Bot(new TopStrategy(), true, false);
-                }
-              } else if (evenNum > oddNum) {
-                if (choice == Choice.ODD) {
-                  bot = new Bot(new TopStrategy(), false, true);
-                } else {
-                  bot = new Bot(new TopStrategy(), false, false);
-                }
-              } else {
-                bot = new Bot(new RandomStrategy());
-              }
-              currentStrat = "top";
-            } else {
-              bot = new Bot(new RandomStrategy());
-              currentStrat = "random";
-            }
-          }
-        }
-        botFingers = botLevel.getFingers(bot);
-        break;
-      default:
-        MessageCli.INVALID_DIFFICULTY.printMessage();
-        break;
-    }
+    botFingers = botLevel.getFingers(roundNumber, oddNum, evenNum, botWin, currentStrat);
     sum = String.valueOf(humanFingers + botFingers);
     // checks if the sum is even or odd
     if (Utils.isEven(humanFingers + botFingers)) {

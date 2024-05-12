@@ -1,4 +1,5 @@
 package nz.ac.auckland.se281;
+import nz.ac.auckland.se281.Main.Choice;
 
 public class DifficultyFactory {
   /**
@@ -7,15 +8,15 @@ public class DifficultyFactory {
    * @param type difficulty of the game in type string
    * @return a new instance of a difficulty
    */
-  public static BotDifficulty createDifficulty(String type) {
+  public static BotDifficulty createDifficulty(String type, Choice choice) {
     // finds out what difficulty the bot is and then creates a instance of the difficulty
     switch (type) {
       case "EASY":
         return new EasyDifficulty();
       case "MEDIUM":
-        return new MediumDifficulty();
+        return new MediumDifficulty(choice);
       case "HARD":
-        return new HardDifficulty();
+        return new HardDifficulty(choice);
       default:
         break;
     }

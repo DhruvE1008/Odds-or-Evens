@@ -1,13 +1,21 @@
 package nz.ac.auckland.se281;
 
+import nz.ac.auckland.se281.Main.Choice;
+
 public class EasyDifficulty implements BotDifficulty {
   /**
    * gets the number of fingers by random strategy
    *
-   * @param bot is an instance of class Bot
    * @return gives us the number that the AI generates
    */
-  public int getFingers(Bot bot) {
+  @Override
+  public int getFingers(int roundNumber, int oddNum, int evenNum, boolean botWin, String currentStrat) {
+    Bot bot = new Bot(new RandomStrategy());
     return bot.play();
+  }
+
+  @Override 
+  public String getStrat() {
+    return "Random";
   }
 }
