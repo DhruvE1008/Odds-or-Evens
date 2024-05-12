@@ -1,5 +1,6 @@
 package nz.ac.auckland.se281;
 
+/** A type of strategy where it randomly chooses a number from 0 and 5. */
 public class RandomStrategy implements Strategy {
   /**
    * Randomly generates a number between 0 and 5 and returns it.

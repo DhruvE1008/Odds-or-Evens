@@ -1,6 +1,11 @@
 package nz.ac.auckland.se281;
+
 import nz.ac.auckland.se281.Main.Choice;
 
+/**
+ * This factory class takes in the difficulty of the AI that the user wants to play as it creates a
+ * new instance of its respective difficulty class.
+ */
 public class DifficultyFactory {
   /**
    * takes in the difficulty as input and then creates an instance of the difficulty.

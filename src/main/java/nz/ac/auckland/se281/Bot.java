@@ -1,5 +1,9 @@
 package nz.ac.auckland.se281;
 
+/**
+ * Class Bot which represents the AI and has methods setStrategy and play. takes the initial
+ * strategy as the input to the constructor.
+ */
 public class Bot {
   private Strategy strategy;
   private boolean moreOddThanEven;

@@ -1,5 +1,9 @@
 package nz.ac.auckland.se281;
 
+/**
+ * class that implements the strategy interface which has the AI return a number based on what the
+ * user has been inputting in the past.
+ */
 public class TopStrategy implements Strategy {
   /**
    * Generates an odd number or even number based on how much odd and even numbers the user has

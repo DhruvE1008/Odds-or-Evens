@@ -60,7 +60,7 @@ public class Game {
     }
     boolean validInputFound = false;
     String input;
-    int botFingers = -1;
+    int botFingers;
     int humanFingers = -1;
     String sum;
     int evenNum = 0;
@@ -124,15 +124,16 @@ public class Game {
     }
   }
 
+  /** method that ends the game by stating who the winner is. */
   public void endGame() {
     if (!gameStarted) {
       MessageCli.GAME_NOT_STARTED.printMessage();
       return;
-    } 
+    }
     showStats();
-    if (humanScore>botScore) {
+    if (humanScore > botScore) {
       MessageCli.PRINT_END_GAME.printMessage(name);
-    } else if (botScore>humanScore) {
+    } else if (botScore > humanScore) {
       MessageCli.PRINT_END_GAME.printMessage("HAL-9000");
     } else {
       MessageCli.PRINT_END_GAME_TIE.printMessage();
@@ -140,12 +141,18 @@ public class Game {
     gameStarted = false;
   }
 
+  /**
+   * shows the data of how much games the user has won and lost and how many games the AI has won
+   * and lost.
+   */
   public void showStats() {
     if (!gameStarted) {
       MessageCli.GAME_NOT_STARTED.printMessage();
       return;
     }
-    MessageCli.PRINT_PLAYER_WINS.printMessage(name, String.valueOf(humanScore), String.valueOf(botScore));
-    MessageCli.PRINT_PLAYER_WINS.printMessage("HAL-9000",String.valueOf(botScore), String.valueOf(humanScore));
+    MessageCli.PRINT_PLAYER_WINS.printMessage(
+        name, String.valueOf(humanScore), String.valueOf(botScore));
+    MessageCli.PRINT_PLAYER_WINS.printMessage(
+        "HAL-9000", String.valueOf(botScore), String.valueOf(humanScore));
   }
 }
