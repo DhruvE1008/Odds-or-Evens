@@ -54,7 +54,7 @@ public class Game {
    * round.
    */
   public void play() {
-    if (gameStarted == false) {
+    if (!gameStarted) {
       MessageCli.GAME_NOT_STARTED.printMessage();
       return;
     }
@@ -105,23 +105,40 @@ public class Game {
       if (choice == Choice.EVEN) {
         MessageCli.PRINT_OUTCOME_ROUND.printMessage(sum, "EVEN", name);
         botWin = false;
+        humanScore++;
       } else {
         MessageCli.PRINT_OUTCOME_ROUND.printMessage(sum, "EVEN", "HAL-9000");
         botWin = true;
+        botScore++;
       }
     } else {
       // if the choice was odd and the sum is odd the user wins otherwise the bot wins
       if (choice == Choice.ODD) {
         MessageCli.PRINT_OUTCOME_ROUND.printMessage(sum, "ODD", name);
         botWin = false;
+        humanScore++;
       } else {
         MessageCli.PRINT_OUTCOME_ROUND.printMessage(sum, "ODD", "HAL-9000");
         botWin = true;
+        botScore++;
       }
     }
   }
 
-  public void endGame() {}
+  public void endGame() {
+    if (!gameStarted) {
+      MessageCli.GAME_NOT_STARTED.printMessage();
+      return;
+    } 
+    showStats();
+  }
 
-  public void showStats() {}
+  public void showStats() {
+    if (!gameStarted) {
+      MessageCli.GAME_NOT_STARTED.printMessage();
+      return;
+    }
+    MessageCli.PRINT_PLAYER_WINS.printMessage(name, String.valueOf(humanScore), String.valueOf(botScore));
+    MessageCli.PRINT_PLAYER_WINS.printMessage("HAL-9000",String.valueOf(botScore), String.valueOf(humanScore));
+  }
 }
