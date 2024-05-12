@@ -6,7 +6,7 @@ import nz.ac.auckland.se281.Main.Difficulty;
 
 /** This class represents the Game is the main entry point. */
 public class Game {
-  private int roundNumber = 1;
+  private int roundNumber;
   private String name;
   private Choice choice;
   private int humanScore;
@@ -29,6 +29,7 @@ public class Game {
     this.botScore = 0;
     this.humanScore = 0;
     this.choice = choice;
+    roundNumber = 1;
     // plays the move based on what difficulty the bot is
     switch (difficulty) {
       case EASY:
