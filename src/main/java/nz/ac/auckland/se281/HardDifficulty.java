@@ -30,9 +30,11 @@ public class HardDifficulty implements BotDifficulty {
   public int getFingers(
       int roundNumber, int oddNum, int evenNum, boolean botWin, String currentStrat) {
     if (roundNumber < 4) {
+      // if round number is less than 4 then the random strategy will be used.
       bot = new Bot(new RandomStrategy());
     } else {
       if (botWin) {
+        // if the bot won the previous round the strategy will stay the same.
         if (currentStrat == "random") {
           bot = new Bot(new RandomStrategy());
           newStrat = "random";
@@ -41,6 +43,7 @@ public class HardDifficulty implements BotDifficulty {
           newStrat = "top";
         }
       } else {
+        // if the bot didnt win the previous round the strategy will change
         if (currentStrat == "random") {
           topStrategySetup(oddNum, evenNum, currentStrat);
           newStrat = "top";
@@ -57,9 +60,9 @@ public class HardDifficulty implements BotDifficulty {
    * sets up the TopStrategy class by sending through the parameters based on what the user has
    * input before and whether it chose Odd or Even.
    *
-   * @param oddNum
-   * @param evenNum
-   * @param currentStrat
+   * @param oddNum - contains the number of odd numbers that the user has input
+   * @param evenNum - contains the number of even numbers that the user has input
+   * @param currentStrat - contains the most frequent strategy used by the AI
    */
   public void topStrategySetup(int oddNum, int evenNum, String currentStrat) {
     // checks the amount of odd numbers and even numbers and see which one is
