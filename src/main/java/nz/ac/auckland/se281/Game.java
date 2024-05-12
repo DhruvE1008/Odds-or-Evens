@@ -27,6 +27,7 @@ public class Game {
     this.name = options[0];
     this.botScore = 0;
     this.humanScore = 0;
+    this.choice = choice;
     // plays the move based on what difficulty the bot is
     switch (difficulty) {
       case EASY:
