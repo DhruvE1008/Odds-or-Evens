@@ -12,7 +12,6 @@ public class Game {
   private int humanScore;
   private int botScore;
   private boolean botWin;
-  private String currentStrat;
   private BotDifficulty botLevel;
   private boolean gameStarted = false;
   private ArrayList<Integer> userInput = new ArrayList<>();
@@ -99,7 +98,7 @@ public class Game {
         oddNum++;
       }
     }
-    botFingers = botLevel.getFingers(roundNumber, oddNum, evenNum, botWin, currentStrat);
+    botFingers = botLevel.getFingers(roundNumber, oddNum, evenNum, botWin);
     sum = String.valueOf(humanFingers + botFingers);
     // checks if the sum is even or odd
     if (Utils.isEven(humanFingers + botFingers)) {

@@ -4,13 +4,12 @@ import nz.ac.auckland.se281.Main.Choice;
 
 /**
  * class that represents the hard difficulty that an AI could be and it features the abstract
- * methods getFingers and getStrat and also has the method topStrategySetup. The constructor takes
+ * method getFingers and also has the method topStrategySetup. The constructor takes
  * choice as its parameter which stores whether the user chose Odd or Even.
  */
 public class HardDifficulty implements BotDifficulty {
   private Choice choice;
-  private String newStrat;
-  private Bot bot;
+  private Bot bot = null;
 
   public HardDifficulty(Choice choice) {
     this.choice = choice;
@@ -23,34 +22,21 @@ public class HardDifficulty implements BotDifficulty {
    * @param oddNum the number of odd numbers the user has input
    * @param evenNum the number of even numbers the user has input
    * @param botWin stores whether or not the bot won the last round
-   * @param currentStrat stores what strategy was used the last round
    * @return gives us the number that the AI generates
    */
   @Override
-  public int getFingers(
-      int roundNumber, int oddNum, int evenNum, boolean botWin, String currentStrat) {
-    if (roundNumber < 4) {
-      // if round number is less than 4 then the random strategy will be used.
+  public int getFingers(int roundNumber, int oddNum, int evenNum, boolean botWin) {
+    if (bot == null) {
       bot = new Bot(new RandomStrategy());
-    } else {
+    }
+    if (roundNumber >= 4) {
+      // if round number is less than 4 then the random strategy will be used.
       if (botWin) {
         // if the bot won the previous round the strategy will stay the same.
-        if (currentStrat == "random") {
-          bot = new Bot(new RandomStrategy());
-          newStrat = "random";
-        } else {
-          topStrategySetup(oddNum, evenNum, currentStrat);
-          newStrat = "top";
-        }
+        bot.setStrategy(bot.getStrategy(), (oddNum > evenNum), (choice == Choice.ODD));
       } else {
         // if the bot didnt win the previous round the strategy will change
-        if (currentStrat == "random") {
-          topStrategySetup(oddNum, evenNum, currentStrat);
-          newStrat = "top";
-        } else {
-          bot = new Bot(new RandomStrategy());
-          newStrat = "random";
-        }
+        StrategySetup(oddNum, evenNum);
       }
     }
     return bot.play();
@@ -62,32 +48,26 @@ public class HardDifficulty implements BotDifficulty {
    *
    * @param oddNum - contains the number of odd numbers that the user has input
    * @param evenNum - contains the number of even numbers that the user has input
-   * @param currentStrat - contains the most frequent strategy used by the AI
    */
-  public void topStrategySetup(int oddNum, int evenNum, String currentStrat) {
+  public void StrategySetup(int oddNum, int evenNum) {
     // checks the amount of odd numbers and even numbers and see which one is
     // more frequent.
     if (oddNum > evenNum) {
       // checks whether the choice was odd or even
       if (choice == Choice.ODD) {
-        bot = new Bot(new TopStrategy(), true, true);
+        bot.switchStrategy(true, true);
       } else {
-        bot = new Bot(new TopStrategy(), true, false);
+        bot.switchStrategy(true, false);
       }
     } else if (evenNum > oddNum) {
       if (choice == Choice.ODD) {
-        bot = new Bot(new TopStrategy(), false, true);
+        bot.switchStrategy(false, true);
       } else {
-        bot = new Bot(new TopStrategy(), false, false);
+        bot.switchStrategy(false, false);
       }
     } else {
       // random strategy is used if the amount of odd and even numbers is the same
-      bot = new Bot(new RandomStrategy());
+      bot.setStrategy(new RandomStrategy());
     }
-  }
-
-  @Override
-  public String getStrat() {
-    return newStrat;
   }
 }
