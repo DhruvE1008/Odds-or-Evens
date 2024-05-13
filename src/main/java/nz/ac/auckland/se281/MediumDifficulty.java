@@ -28,22 +28,22 @@ public class MediumDifficulty implements BotDifficulty {
   public int getFingers(
       int roundNumber, int oddNum, int evenNum, boolean botWin) {
     if (bot == null) {
-       bot = new Bot(new RandomStrategy());
+      bot = new Bot(new RandomStrategy());
     }
     if (roundNumber >= 4) {
       // checks if the user inputs more odd numbers than even numbers
       if (oddNum > evenNum) {
         if (choice == Choice.ODD) {
           // checks if the user chose odd or even
-          bot.setStrategy(new TopStrategy(),true, true);
+          bot.setStrategy(new TopStrategy(), true, true);
         } else {
-          bot.setStrategy(new TopStrategy(),true, false);
+          bot.setStrategy(new TopStrategy(), true, false);
         }
       } else if (evenNum > oddNum) {
         if (choice == Choice.ODD) {
-          bot.setStrategy(new TopStrategy(),false, true);
+          bot.setStrategy(new TopStrategy(), false, true);
         } else {
-          bot.setStrategy(new TopStrategy(),false, false);
+          bot.setStrategy(new TopStrategy(), false, false);
         }
       } else {
         // if the user has input odd and even numbers the same amount of times

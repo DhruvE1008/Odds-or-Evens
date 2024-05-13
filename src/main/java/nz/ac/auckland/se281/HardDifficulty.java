@@ -36,7 +36,7 @@ public class HardDifficulty implements BotDifficulty {
         bot.setStrategy(bot.getStrategy(), (oddNum > evenNum), (choice == Choice.ODD));
       } else {
         // if the bot didnt win the previous round the strategy will change
-        StrategySetup(oddNum, evenNum);
+        setUpStrategy(oddNum, evenNum);
       }
     }
     return bot.play();
@@ -49,7 +49,7 @@ public class HardDifficulty implements BotDifficulty {
    * @param oddNum - contains the number of odd numbers that the user has input
    * @param evenNum - contains the number of even numbers that the user has input
    */
-  public void StrategySetup(int oddNum, int evenNum) {
+  public void setUpStrategy(int oddNum, int evenNum) {
     // checks the amount of odd numbers and even numbers and see which one is
     // more frequent.
     if (oddNum > evenNum) {

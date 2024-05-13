@@ -1,8 +1,9 @@
 package nz.ac.auckland.se281;
 
 /**
- * Class Bot which represents the AI and has methods setStrategy, getStrategy, switchStrategy and play. 
- * Takes the initial strategy as the input to the constructor.
+ * Class Bot which represents the AI and has methods setStrategy, 
+ * getStrategy, switchStrategy and play. Takes the initial strategy 
+ * as the input to the constructor.
  */
 public class Bot {
   private Strategy strategy;
@@ -29,6 +30,7 @@ public class Bot {
 
   /**
    * Allows for the code to change the strategy if wanted during operation.
+   * 
    * @param strategy the new strategy the AI will use
    * @param moreOddThanEven whether the user has input more odd numbers than even numbers
    * @param isOdd whether the user chose to play odd or even
@@ -41,6 +43,7 @@ public class Bot {
 
   /**
    * returns the last used strategy.
+   * 
    * @return the strategy that has been last used
    */
   public Strategy getStrategy() {
@@ -50,6 +53,7 @@ public class Bot {
   /**
    * Switches the strategy that was just used to the one that 
    * wasn't used.
+   * 
    * @param moreOddThanEven whether the user has input more odd numbers than even
    * @param isOdd whether the user chose to play odd or even
    */
