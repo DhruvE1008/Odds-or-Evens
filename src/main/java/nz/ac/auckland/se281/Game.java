@@ -69,7 +69,6 @@ public class Game {
     int oddNum = 0;
     // prints what number it is
     MessageCli.START_ROUND.printMessage(String.valueOf(roundNumber));
-    roundNumber++;
     // loops until the user inputs the correct information
     while (validInputFound == false) {
       validInputFound = false;
@@ -84,7 +83,6 @@ public class Game {
         } else {
           MessageCli.PRINT_INFO_HAND.printMessage(name, input);
           validInputFound = true;
-          userInput.add(humanFingers);
         }
       } else {
         MessageCli.INVALID_INPUT.printMessage();
@@ -98,8 +96,10 @@ public class Game {
         oddNum++;
       }
     }
+    userInput.add(humanFingers);
     botFingers = botLevel.getFingers(roundNumber, oddNum, evenNum, botWin);
     sum = String.valueOf(humanFingers + botFingers);
+    roundNumber++;
     // checks if the sum is even or odd
     if (Utils.isEven(humanFingers + botFingers)) {
       // if the choice was even and the sum is even the user wins otherwise the bot wins
