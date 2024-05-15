@@ -5,6 +5,9 @@ public class RandomStrategy implements Strategy {
   /**
    * Randomly generates a number between 0 and 5 and returns it.
    *
+   * @param moreOddThanEven stores whether the user has input more odd numbers or even numbers in
+   *     the past.
+   * @param isOdd stores whether the user chose odd or even.
    * @return an integer between 0 and 5 inclusive
    */
   @Override

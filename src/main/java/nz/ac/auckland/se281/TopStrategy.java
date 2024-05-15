@@ -10,6 +10,7 @@ public class TopStrategy implements Strategy {
    * input.
    *
    * @param moreOddThanEven states whether the user has input more odd than even numbers or not
+   * @param isOdd states whether the user chose odd or even
    * @return an integer between 0 and 5 that the AI generated
    */
   @Override

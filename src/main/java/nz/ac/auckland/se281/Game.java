@@ -89,7 +89,7 @@ public class Game {
       }
     }
     // counts the number of even numbers and number of odd numbers that the user has input
-    for (int i = 0; i < userInput.size() - 1; i++) {
+    for (int i = 0; i < userInput.size(); i++) {
       if (Utils.isEven(userInput.get(i))) {
         evenNum++;
       } else {
